@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tourism_app/model/tourism..dart';
+import 'package:tourism_app/data/model/tourism..dart';
 import 'package:tourism_app/provider/detail/bookmark_list_provider.dart';
 import 'package:tourism_app/screen/home/tourism_card_widget.dart';
 import 'package:tourism_app/static/navigation_route.dart';
@@ -28,7 +28,7 @@ class BookmarkScreen extends StatelessWidget {
                     Navigator.pushNamed(
                       context,
                       NavigationRoute.detailRoute.name,
-                      arguments: tourism,
+                      arguments: tourism.id,
                     );
                   },
                 );
