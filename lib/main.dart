@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tourism_app/data/api/api_sevice.dart';
 import 'package:tourism_app/data/model/tourism..dart';
 import 'package:tourism_app/provider/detail/bookmark_list_provider.dart';
+import 'package:tourism_app/provider/detail/tourism_detail_provider.dart';
+import 'package:tourism_app/provider/home/tourism_list_provider.dart';
 import 'package:tourism_app/provider/main/index_nav_provider.dart';
 import 'package:tourism_app/screen/detail/detail_screen.dart';
 import 'package:tourism_app/screen/home/home_screen.dart';
@@ -22,6 +25,19 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => BookmarkListProvider(),
+        ),
+        Provider(
+          create: (context) => ApiService(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TourismListProvider(
+            context.read<ApiService>(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TourismDetailProvider(
+            context.read<ApiService>(),
+          ),
         ),
       ],
       child: const MyApp(),
@@ -95,36 +111,36 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-const lightColorScheme = ColorScheme(
-  brightness: Brightness.light,
-  primary: Color(0xFF2A5BB1),
-  onPrimary: Color(0xFFFFFFFF),
-  primaryContainer: Color(0xFFD9E2FF),
-  onPrimaryContainer: Color(0xFF001A43),
-  secondary: Color(0xFF245FA6),
-  onSecondary: Color(0xFFFFFFFF),
-  secondaryContainer: Color(0xFFD5E3FF),
-  onSecondaryContainer: Color(0xFF001B3C),
-  tertiary: Color(0xFFAB3500),
-  onTertiary: Color(0xFFFFFFFF),
-  tertiaryContainer: Color(0xFFFFDBD0),
-  onTertiaryContainer: Color(0xFF390C00),
-  error: Color(0xFFBA1A1A),
-  errorContainer: Color(0xFFFFDAD6),
-  onError: Color(0xFFFFFFFF),
-  onErrorContainer: Color(0xFF410002),
-  background: Color(0xFFFEFBFF),
-  onBackground: Color(0xFF1B1B1F),
-  surface: Color(0xFFFEFBFF),
-  onSurface: Color(0xFF1B1B1F),
-  surfaceVariant: Color(0xFFE1E2EC),
-  onSurfaceVariant: Color(0xFF44474F),
-  outline: Color(0xFF757780),
-  onInverseSurface: Color(0xFFF2F0F4),
-  inverseSurface: Color(0xFF303034),
-  inversePrimary: Color(0xFFAFC6FF),
-  shadow: Color(0xFF000000),
-  surfaceTint: Color(0xFF2A5BB1),
-  outlineVariant: Color(0xFFC5C6D0),
-  scrim: Color(0xFF000000),
-);
+// const lightColorScheme = ColorScheme(
+//   brightness: Brightness.light,
+//   primary: Color(0xFF2A5BB1),
+//   onPrimary: Color(0xFFFFFFFF),
+//   primaryContainer: Color(0xFFD9E2FF),
+//   onPrimaryContainer: Color(0xFF001A43),
+//   secondary: Color(0xFF245FA6),
+//   onSecondary: Color(0xFFFFFFFF),
+//   secondaryContainer: Color(0xFFD5E3FF),
+//   onSecondaryContainer: Color(0xFF001B3C),
+//   tertiary: Color(0xFFAB3500),
+//   onTertiary: Color(0xFFFFFFFF),
+//   tertiaryContainer: Color(0xFFFFDBD0),
+//   onTertiaryContainer: Color(0xFF390C00),
+//   error: Color(0xFFBA1A1A),
+//   errorContainer: Color(0xFFFFDAD6),
+//   onError: Color(0xFFFFFFFF),
+//   onErrorContainer: Color(0xFF410002),
+//   background: Color(0xFFFEFBFF),
+//   onBackground: Color(0xFF1B1B1F),
+//   surface: Color(0xFFFEFBFF),
+//   onSurface: Color(0xFF1B1B1F),
+//   surfaceVariant: Color(0xFFE1E2EC),
+//   onSurfaceVariant: Color(0xFF44474F),
+//   outline: Color(0xFF757780),
+//   onInverseSurface: Color(0xFFF2F0F4),
+//   inverseSurface: Color(0xFF303034),
+//   inversePrimary: Color(0xFFAFC6FF),
+//   shadow: Color(0xFF000000),
+//   surfaceTint: Color(0xFF2A5BB1),
+//   outlineVariant: Color(0xFFC5C6D0),
+//   scrim: Color(0xFF000000),
+// );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tourism_app/main.dart';
 import 'package:tourism_app/style/colors/tourism_colors.dart';
 import 'package:tourism_app/style/typography/tourism_text_styles.dart';
 
@@ -46,6 +47,7 @@ class TourismTheme {
 
   static AppBarTheme get _appBarTheme{
     return AppBarTheme(
+      // backgroundColor: lightColorScheme.primary,
       toolbarTextStyle: _textTheme.titleLarge,
       shape: const BeveledRectangleBorder(
         borderRadius: BorderRadius.only(
