@@ -25,8 +25,8 @@ class ApiService {
     final response = await http.get(Uri.parse('$_baseUrl/detail/$id'));
 
     if (response.statusCode == 200) {
-      print('body response');
-      print(response.body);
+      // print('body response');
+      // print(response.body);
       return TourismDetailResponse.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load tourism detail');
