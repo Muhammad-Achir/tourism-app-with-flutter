@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tourism_app/data/api/api_sevice.dart';
+import 'package:tourism_app/data/local/local_database_service.dart';
 import 'package:tourism_app/data/model/tourism..dart';
+import 'package:tourism_app/provider/bookmark/local_database_provider.dart';
 import 'package:tourism_app/provider/detail/bookmark_list_provider.dart';
 import 'package:tourism_app/provider/detail/tourism_detail_provider.dart';
 import 'package:tourism_app/provider/home/tourism_list_provider.dart';
@@ -23,9 +25,9 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => IndexNavProvider(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => BookmarkListProvider(),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (context) => BookmarkListProvider(),
+        // ),
         Provider(
           create: (context) => ApiService(),
         ),
@@ -37,6 +39,14 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => TourismDetailProvider(
             context.read<ApiService>(),
+          ),
+        ),
+        Provider(
+          create: (context) => LocalDatabaseService(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LocalDatabaseProvider(
+            context.read<LocalDatabaseService>(),
           ),
         ),
       ],
