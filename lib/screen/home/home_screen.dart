@@ -88,7 +88,11 @@ class _HomeScreenState extends State<HomeScreen> {
       //     }
       //   },
       // ),
-      body: Consumer<TourismListProvider>(builder: (context, value, child) {
+      body: Consumer<TourismListProvider>(builder: (
+        context,
+        value,
+        child,
+      ) {
         return switch (value.resulstState) {
           TourismListLoadingState() => const Center(
               child: CircularProgressIndicator(),

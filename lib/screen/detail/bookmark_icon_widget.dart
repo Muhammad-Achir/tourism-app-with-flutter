@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tourism_app/data/model/tourism..dart';
+import 'package:tourism_app/provider/bookmark/local_database_provider.dart';
 import 'package:tourism_app/provider/detail/bookmark_icon_provider.dart';
 import 'package:tourism_app/provider/detail/bookmark_list_provider.dart';
 
@@ -31,14 +32,23 @@ class _BookmarkIconWidgetState extends State<BookmarkIconWidget> {
     //   }
     // });
 
-    final bookmarkListProvider = context.read<BookmarkListProvider>();
+    // final bookmarkListProvider = context.read<BookmarkListProvider>();
+    final localDatabaseProvider = context.read<LocalDatabaseProvider>();
+
     final bookmarkIconProvider = context.read<BookmarkIconProvider>();
 
-    Future.microtask(() {
-      final tourimInList =
-          bookmarkListProvider.checkItemBookmark(widget.tourism);
+    Future.microtask(() async {
+      // final tourimInList =
+      // bookmarkListProvider.checkItemBookmark(widget.tourism);
+      await localDatabaseProvider.loadTourismById(widget.tourism.id);
+      // final value = localDatabaseProvider.checkItemBookmark(widget.tourism.id);
 
-      bookmarkIconProvider.isBookmarked = tourimInList;
+      // bookmarkIconProvider.isBookmarked = tourimInList;
+
+      final value = localDatabaseProvider.tourism == null
+          ? false
+          : localDatabaseProvider.tourism!.id == widget.tourism.id;
+      bookmarkIconProvider.isBookmarked = value;
     });
 
     super.initState();
@@ -47,7 +57,7 @@ class _BookmarkIconWidgetState extends State<BookmarkIconWidget> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
+      onPressed: () async {
         // setState(() {
         //   if (_isBookmarked) {
         //     bookmarkTourismList
@@ -58,17 +68,22 @@ class _BookmarkIconWidgetState extends State<BookmarkIconWidget> {
         //   _isBookmarked = !_isBookmarked;
         // });
 
-        final bookmarkListProvider = context.read<BookmarkListProvider>();
+        // final bookmarkListProvider = context.read<BookmarkListProvider>();
+        final localDatabaseProvider = context.read<LocalDatabaseProvider>();
+
         final bookmarkIconProvider = context.read<BookmarkIconProvider>();
         final isBookmarked = bookmarkIconProvider.isBookmarked;
 
         if (!isBookmarked) {
-          bookmarkListProvider.addBookmark(widget.tourism);
+          // bookmarkListProvider.addBookmark(widget.tourism);
+          await localDatabaseProvider.saveTourism(widget.tourism);
         } else {
-          bookmarkListProvider.removeBookmark(widget.tourism);
+          // bookmarkListProvider.removeBookmark(widget.tourism);
+          await localDatabaseProvider.removeTourismById(widget.tourism.id);
         }
 
         bookmarkIconProvider.isBookmarked = !isBookmarked;
+        localDatabaseProvider.loadAllTourism();
       },
       icon: Icon(
         // _isBookmarked ? Icons.bookmark : Icons.bookmark_outline,
